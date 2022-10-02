@@ -1,55 +1,52 @@
-// fetch("http://localhost:3000/api/products")
-// .then(reponse => console.log(reponse))
 
 fetch("http://localhost:3000/api/products")
   .then((response) => response.json())
   .then((data) => {
     let section_canape = document.getElementById("items");
-    let nom_canape;
+    section_canape.className = "items";
+    
+    let lien_canape;
     let image_canape;
-    let price_canape;
-    let texte_canape;
+    let nom_canape;
     let description_canape;
-    let id_canape;
-    let colors_canape;
+    let article = document.getElementsByTagName("article");
 
     for (let i = 0; i < data.length; i++) {
+      // Affiche lien Canapé
+      lien_canape = document.createElement("a");
+      lien_canape.setAttribute("href", "./product.html?id=" + data[i]._id)
+      lien_canape.textContent = data[i]._id;
+      section_canape.appendChild(lien_canape);
 
-      // Affiche nom Canapé
-      nom_canape = document.createElement("h3");
-      nom_canape.textContent = data[i].name;
-      section_canape.appendChild(nom_canape);
+      let article = document.createElement("Article");
+      lien_canape.appendChild(article);
+  
 
       // Affiche image Canapé
       image_canape = document.createElement("img");
-      image_canape.innerText = data[i].imageUrl;
-      section_canape.appendChild(image_canape);
+      image_canape.src= data[i].imageUrl;
+      image_canape.setAttribute("alt", data[i].altTxt); 
+      article.appendChild(image_canape);
+    
 
-      // Affiche Prix Canapé
-      price_canape = document.createElement("h3");
-      price_canape.textContent = data[i].price;
-      section_canape.appendChild(price_canape);
+      // Affiche nom Canapé h3
+      nom_canape = document.createElement("h3");
+      nom_canape.textContent = data[i].name;
+      nom_canape.setAttribute("class", "productName");
+      article.appendChild(nom_canape);
 
-      // Affiche Texte Canapé
-      texte_canape = document.createElement("h3");
-      texte_canape.textContent = data[i].altTxt;
-      section_canape.appendChild(texte_canape);
 
       // Affiche Description Canapé
-      description_canape = document.createElement("h3");
+      description_canape = document.createElement("p");
       description_canape.textContent = data[i].description;
-      section_canape.appendChild(description_canape);
-
-      // Affiche ID Canapé
-      id_canape = document.createElement("h3");
-      id_canape.textContent = data[i]._id;
-      section_canape.appendChild(id_canape);
-
-        // Affiche colors Canapé
-        colors_canape = document.createElement("h3");
-        colors_canape.textContent = data[i].colors;
-        section_canape.appendChild(colors_canape);
+      description_canape.setAttribute("class", "productDescription");
+      article.appendChild(description_canape);
+      console.log(lien_canape);
     }
-
-    console.log(data);
   });
+
+
+
+
+
+
