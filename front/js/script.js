@@ -15,7 +15,7 @@ fetch("http://localhost:3000/api/products")
       // Affiche lien Canapé
       lien_canape = document.createElement("a");
       lien_canape.setAttribute("href", "./product.html?id=" + data[i]._id)
-      lien_canape.textContent = data[i]._id;
+      // lien_canape.textContent = data[i]._id;
       section_canape.appendChild(lien_canape);
 
       let article = document.createElement("Article");
