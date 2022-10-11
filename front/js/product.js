@@ -79,30 +79,37 @@ fetch("http://localhost:3000/api/products/" + id)
 
         // récupération du storage
         let récup_storage = JSON.parse(localStorage.getItem("choix_client"));
-//récupération du storage filtré avec .filter() qui a pour condition de faire remonter les mm couleur et mm id que canap. On obtient tous les objets similaires, avec des quantités différentes, naturellement (...).
+
+        //RÉCUP+ADDITION+PUSH DES QUANTITÉS
+        //récupération du storage filtré avec .filter() qui a pour condition de faire remonter les mm couleur et mm id que canap. On obtient tous les objets similaires, avec des quantités différentes, naturellement (...).
         let filter_récup_storage = récup_storage.filter((el) => el.couleur === canap.couleur && el.id === canap.id);
         console.log(filter_récup_storage);
-   //les objets obtenus similaires à canap, sont "mapés" avec .map() qui permet de récupérer seulement la quanité pour chaque objet
-   //IMPOSSIBLE de parse_int, ou Number, ou SJON.parse (...). Astuce trouvée sur OC, faire *1, convertit une chaîne, directement en nombre!!
-        let quantité_map_récup_storage = filter_récup_storage.map((el) => el.quantité*1);
+        //les objets obtenus similaires à canap, sont "mapés" avec .map() qui permet de récupérer seulement la quanité pour chaque objet
+        //IMPOSSIBLE de parse_int, ou Number, ou SJON.parse (...). Astuce trouvée sur OC, faire *1, convertit une chaîne, directement en nombre!!
+        let quantité_map_récup_storage = filter_récup_storage.map((el) => el.quantité * 1);
         console.log(quantité_map_récup_storage);
-    // avec .reduce (les méthodes de tableaux par le web designer), on peut additionner les valeurs du tableau
-        let addition_des_quantités =  quantité_map_récup_storage.reduce((a,b) => a+b);
+        // avec .reduce (les méthodes de tableaux par le web designer), on peut additionner les valeurs du tableau
+        let addition_des_quantités = quantité_map_récup_storage.reduce((a, b) => a + b);
         console.log(addition_des_quantités);
-      
-
-    //     for (let i in quantité_map_récup_storage) {
-    //       let tableau = [];
-    //       tableau.push(quantité_map_récup_storage[i]*1);
-    // tableau.reduce((a,b) => a+b);
-    //       console.log(tableau);
-
-    //     }
-    
+         // Suppression des objets similaires en utilisant .splice(0 = index, 1000 égal nombre d'objets supprimés. Existe-t-il une autre solution que 1000, existe-t-il un truc pour dire tous les objets?)
+        let supprimer_objets_similaires = filter_récup_storage.splice(0, 1000);
+        console.log(supprimer_objets_similaires);
+        // la valeur de la clefs quantité de l'objet canap est modifiée et je passe à la palce la quantité total des objets similaires obtenue juste avant.
+     canap.quantité = addition_des_quantités;
+     console.log(canap);
 
 
 
 
+
+
+        //     for (let i in quantité_map_récup_storage) {
+        //       let tableau = [];
+        //       tableau.push(quantité_map_récup_storage[i]*1);
+        // tableau.reduce((a,b) => a+b);
+        //       console.log(tableau);
+
+        //     }
 
         // console.log(JSON.parse(quantité_map_récup_storage));
 
