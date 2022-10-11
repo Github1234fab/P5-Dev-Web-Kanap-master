@@ -1,14 +1,6 @@
 let récupération_panier = JSON.parse(localStorage.getItem("choix_client"));
 console.log(récupération_panier);
 
-
-
-
-
-
-
-
-
 // // requête pour récupération data de ID, soit récupération_panier[0]
 // fetch("http://localhost:3000/api/products/" + récupération_panier[0])
 //   .then((response) => response.json())

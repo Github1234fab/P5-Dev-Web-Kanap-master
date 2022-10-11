@@ -32,6 +32,7 @@ fetch("http://localhost:3000/api/products/" + id)
     price_product.innerHTML = data.price;
 
     let option;
+    // Select=Couleur
     let select;
 
     // récupèration tableau color
@@ -50,61 +51,66 @@ fetch("http://localhost:3000/api/products/" + id)
     // bouton_panier.addEventListener("click", test_panier);
     bouton_panier.addEventListener("click", test_panier);
 
-    // Tableau pour stocker id, couleur, quantité
-    let array_panier = [];
-
     // fonction id.push couleur.push et qté.push dans array_panier
     function test_panier() {
       if (select.value === "") {
-        alert("veuillez saisir une couleur svp!");
-      }
-      if (input_quantité.value == 0) {
+        alert("veuillez saisir une couleur, svp!");
+      } else if (input_quantité.value == 0) {
         alert("veuillez saisir une quantité svp!");
+      } else if (input_quantité.value < 0) {
+        alert("Veuillez saisir une quantité supérieure à 0, svp!");
+      } else if (input_quantité.value > 100) {
+        alert("Veuillez saisir une quantité inférieure à 100, svp!");
       } else {
-        let ajout_id = array_panier.push(id);
-        let ajout_couleur = array_panier.push(select.value);
-        let ajout_quantité = array_panier.push(input_quantité.value);
-
+        let canap = {
+          id: id,
+          couleur: select.value,
+          quantité: input_quantité.value,
+        };
+        let panier = localStorage.getItem("choix_client");
+        if (panier == null) {
+          panier = [];
+        } else {
+          panier = JSON.parse(panier);
+        }
+        panier.push(canap);
         // envoi vers LS
-        let envoi_panier = localStorage.setItem("choix_client", JSON.stringify(array_panier));
-        // console.log(array_panier);
-      }}
+        let envoi_panier = localStorage.setItem("choix_client", JSON.stringify(panier));
+
+        // récupération du storage
+        let récup_storage = JSON.parse(localStorage.getItem("choix_client"));
+//récupération du storage filtré avec .filter() qui a pour condition de faire remonter les mm couleur et mm id que canap. On obtient tous les objets similaires, avec des quantités différentes, naturellement (...).
+        let filter_récup_storage = récup_storage.filter((el) => el.couleur === canap.couleur && el.id === canap.id);
+        console.log(filter_récup_storage);
+   //les objets obtenus similaires à canap, sont "mapés" avec .map() qui permet de récupérer seulement la quanité pour chaque objet
+   //IMPOSSIBLE de parse_int, ou Number, ou SJON.parse (...). Astuce trouvée sur OC, faire *1, convertit une chaîne, directement en nombre!!
+        let quantité_map_récup_storage = filter_récup_storage.map((el) => el.quantité*1);
+        console.log(quantité_map_récup_storage);
+    // avec .reduce (les méthodes de tableaux par le web designer), on peut additionner les valeurs du tableau
+        let addition_des_quantités =  quantité_map_récup_storage.reduce((a,b) => a+b);
+        console.log(addition_des_quantités);
+      
+
+    //     for (let i in quantité_map_récup_storage) {
+    //       let tableau = [];
+    //       tableau.push(quantité_map_récup_storage[i]*1);
+    // tableau.reduce((a,b) => a+b);
+    //       console.log(tableau);
+
+    //     }
+    
+
+
+
+
+
+        // console.log(JSON.parse(quantité_map_récup_storage));
+
+        // let addition_quantité_récup_storage=  (ParseInt_quantité_map_récup_storage.reduce((a, b) => a+b));
+        // console.log(addition_quantité_récup_storage);
+
+        // let supprim_canap_similaire = filter_récup_storage.splice(0, 100);
+        // console.log(supprim_canap_similaire);
+      }
+    }
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function stockage(e){
-// e.preventDefault();
-// let choix_utilisateur  = {
-//   id: id,
-//   couleur: select.value,
-//   qté: input_quantité.value}
-
-// // création stockage local en string
-// let stockage_localStorage = JSON.stringify(choix_utilisateur);
-// // création localStorage
-// localStorage.setItem("choix", stockage_localStorage);
-// // récupération localStorage
-// let récupération_stockage_localStorage = JSON.parse(localStorage.getItem("choix"));
-// console.log(récupération_stockage_localStorage);
-// array_panier.push(récupération_stockage_localStorage);
-// console.log(array_panier);
-// }
