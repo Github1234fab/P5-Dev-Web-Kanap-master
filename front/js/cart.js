@@ -2,18 +2,16 @@ let récupération_panier = JSON.parse(localStorage.getItem("choix_client"));
 console.log(récupération_panier);
 
 //panier d'id en tableau, grâce à .map
-  let doublons = récupération_panier.map(el => el.id);
+  let array_id_panier = récupération_panier.map(el => el.id);
   // panier moins les doublons grâce à set (voir delftstack)
-  let tri = [...new Set(doublons)];
-  console.log(tri);
+  let doublon = [...new Set(array_id_panier)];
+  console.log(doublon);
 
 //boucle récupération des ID du panier
-for (let i in récupération_panier){
-  let index_id = récupération_panier[i].id;
-  // console.log(index_id);
+for (let i in doublon){
+  let index_id = doublon[i];
+  console.log(index_id);
   
-
-
 fetch("http://localhost:3000/api/products/"+index_id)
   .then((response) => response.json())
   .then((data) => {
