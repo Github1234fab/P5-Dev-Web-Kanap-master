@@ -1,15 +1,15 @@
 let récupération_panier = JSON.parse(localStorage.getItem("choix_client"));
 console.log(récupération_panier);
 
-//panier d'id en tableau, grâce à .map
-  let array_id_panier = récupération_panier.map(el => el.id);
-  // panier moins les doublons grâce à set (voir delftstack)
-  let doublon = [...new Set(array_id_panier)];
-  console.log(doublon);
+// //panier d'id en tableau, grâce à .map
+//   let array_id_panier = récupération_panier.map(el => el.id);
+//   // panier moins les doublons grâce à set (voir delftstack)
+//   let doublon = [...new Set(array_id_panier)];
+//   console.log(doublon);
 
 //boucle récupération des ID du panier
-for (let i in doublon){
-  let index_id = doublon[i];
+for (let i in récupération_panier){
+  let index_id = récupération_panier[i].id;
   console.log(index_id);
   
 fetch("http://localhost:3000/api/products/"+index_id)
@@ -42,8 +42,6 @@ div_img.appendChild(IMG_panier);
 let div_item_content = document.createElement("div");
 div_item_content.setAttribute("class", "cart__item__content");
 section_dom.appendChild(div_item_content);
-
-
 
 // création div  "cart__item__content__description"
 let div_item_content_description = document.createElement("div");
@@ -80,6 +78,7 @@ div_cart_item_content_settings_quantity.appendChild(p_qté);
 
 // Création input class="itemQuantity"
 let input = document.createElement("input");
+input.setAttribute("type", "number");
 input.setAttribute("class", "itemQuantity");
 input.setAttribute("name", "itemQuantity");
 input.setAttribute("min", "1");
@@ -99,6 +98,15 @@ div_cart_item_content_settings_quantity.appendChild(input);
   let texte_p_delete = document.createTextNode("Supprimer");
   p_delete.appendChild(texte_p_delete);
 
+  input.addEventListener("change", change_quantity);
+  function change_quantity () {
+   let new_quantity = input.value;
+   let data_id = document.querySelector('.cart__item')
+  data_id.dataset.id;
+   console.log(data_id);
+
+
+  }
 });
 }
 
