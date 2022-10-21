@@ -133,8 +133,31 @@ for (let i in récupération_panier) {
         });
       }
 
-       //CHANGEMENT QUANTITÉ
+      //CHANGEMENT QUANTITÉ
+      //  let récup_supp =  document.getElementsByClassName("deleteItem");
+      p_delete.addEventListener("click", supprimer_produit);
+      function supprimer_produit() {
+        let supprimer_parent = this.closest("article");
+        let dataset_id_suppression = supprimer_parent.dataset.id;
+        // console.log(dataset_id_suppression);
+        let dataset_couleur_suppression = supprimer_parent.dataset.color;
+        // console.log(dataset_couleur_suppression);
 
+        //.find() pour trouver objet mm id et mm couleur pour supprimer dans LS (récupération_panier)
+        let trouver_suppression_mm_idEtCouleur = récupération_panier.find((el) => {
+          if (el.id == dataset_id_suppression && el.couleur == dataset_couleur_suppression) {
+            let objet_àsupprimer_trouvé = el;
+            console.log(objet_àsupprimer_trouvé);
+
+            // .findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
+            let index_àsupprimer_trouvé = récupération_panier.findIndex((el) => el === objet_àsupprimer_trouvé);
+            console.log(index_àsupprimer_trouvé);
+            // Récup de l'index dans panier
+            let index_suppression_panier = récupération_panier.splice(1, 1);
+            console.log(index_suppression_panier);
+          }
+        });
+      }
 
       //FORMULAIRE
       //récupération des éléments du formulaire
