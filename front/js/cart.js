@@ -153,8 +153,10 @@ for (let i in récupération_panier) {
             let index_àsupprimer_trouvé = récupération_panier.findIndex((el) => el === objet_àsupprimer_trouvé);
             console.log(index_àsupprimer_trouvé);
             // Récup de l'index dans panier
-            let index_suppression_panier = récupération_panier.splice(1, 1);
+            let index_suppression_panier = récupération_panier.splice(index_àsupprimer_trouvé, 1);
             console.log(index_suppression_panier);
+            let nouveau_panier_supprimé =   récupération_panier;
+            console.log(nouveau_panier_supprimé);
           }
         });
       }
