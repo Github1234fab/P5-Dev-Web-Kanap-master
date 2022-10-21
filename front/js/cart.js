@@ -53,7 +53,7 @@ for (let i in récupération_panier) {
       p_couleur.innerHTML = récupération_panier[i].couleur;
       div_item_content_description.appendChild(p_couleur);
 
-      // création P/couleur de div  "cart__item__content__description"
+      // création P/rpix de div  "cart__item__content__description"
       let p_prix = document.createElement("p");
       p_prix.innerHTML = data.price;
       div_item_content_description.appendChild(p_prix);
@@ -86,7 +86,7 @@ for (let i in récupération_panier) {
       // Création div "cart__item__content__settings__delete"
       let div_cart_item_content_settings_delete = document.createElement("div");
       div_cart_item_content_settings_delete.setAttribute("class", "div_cart_item_content_settings_delete");
-      section_dom.appendChild(div_cart_item_content_settings_delete);
+      article.appendChild(div_cart_item_content_settings_delete);
 
       // Création p "deleteItem"
       let p_delete = document.createElement("p");
@@ -94,14 +94,17 @@ for (let i in récupération_panier) {
       div_cart_item_content_settings_delete.appendChild(p_delete);
 
       let texte_p_delete = document.createTextNode("Supprimer");
-      article.appendChild(texte_p_delete);
+      p_delete.appendChild(texte_p_delete);
 
-      //récupération input changement quantité
+      //CHANGEMENT QUANTITÉ
+      //écoute input
       input.addEventListener("change", change_quantity);
       function change_quantity() {
         let new_quantity = input.value;
+        //qté canap+qté modifiée par client
         let new_quantity_canap = Number(new_quantity) + Number(récupération_panier[i].quantité);
         console.log(new_quantity_canap);
+        //récupération des inputs de chaque canap
         let input_parent = this.closest("article");
         let id_qté_modifiée = input_parent.dataset.id;
         console.log(id_qté_modifiée);
@@ -113,31 +116,25 @@ for (let i in récupération_panier) {
           if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
             let objet_trouvé = el;
             console.log(objet_trouvé);
-             //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
+            //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
             let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
             console.log(index_trouvé);
-            let modif_quantité_panier = récupération_panier[index_trouvé ];
-            let test = modif_quantité_panier.quantité = new_quantity_canap;
-            console.log(modif_quantité_panier);
-            console.log(test);
+            //Récup de l'index dans panier
+            let récup_index_panier = récupération_panier[index_trouvé];
+            //modif de la quantité dans l'objet/index
+            let nouvelle_quantité_panier = (récup_index_panier.quantité = new_quantity_canap);
+            console.log(nouvelle_quantité_panier);
+            // nouveau panier avec qté modifiée
             console.log(récupération_panier);
-
-
-              // let objet_trouvé_quantité = el.quantité;
-            // objet_trouvé = new_quantity_canap;
-
-            //   let objet_trouvé_quantité = objet_trouvé.quantité;
-            //  objet_trouvé_quantité = new_quantity_canap;
-            //   console.log(objet_trouvé_quantité);
-            // console.log(récupération_panier);
-            //.findIndex() pour trouver index dans LS (récupération_panier)
-            // let index_trouvé = récupération_panier.findIndex(el => el === objet_trouvé);
-            // console.log(index_trouvé);
-            //  let test =  récupération_panier.splice(index_trouvé);
-            //  console.log(test);
+            let nouveau_panier = récupération_panier;
+            console.log(nouveau_panier);
+            let nouveau_panier_dans_LS = localStorage.setItem("panier_qté_modifiée)", JSON.stringify(nouveau_panier));
           }
         });
       }
+
+       //CHANGEMENT QUANTITÉ
+
 
       //FORMULAIRE
       //récupération des éléments du formulaire
