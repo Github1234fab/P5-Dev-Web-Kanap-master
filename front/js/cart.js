@@ -100,22 +100,44 @@ for (let i in récupération_panier) {
       input.addEventListener("change", change_quantity);
       function change_quantity() {
         let new_quantity = input.value;
-        let new_quantity_id = Number(new_quantity) + Number(récupération_panier[i].quantité);
-        console.log(new_quantity_id);
+        let new_quantity_canap = Number(new_quantity) + Number(récupération_panier[i].quantité);
+        console.log(new_quantity_canap);
         let input_parent = this.closest("article");
         let id_qté_modifiée = input_parent.dataset.id;
-        // console.log(id_qté_modifiée);
+        console.log(id_qté_modifiée);
         let id_couleur_modifée = input_parent.dataset.color;
-        // console.log(id_couleur_modifée);
-//.find() pour trouver mm id et mm couleur dans LS (récupération_panier)
-        let test_mm_idEtCouleur= récupération_panier.find(el => {if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée){
-          console.log(el);
-          console.log(récupération_panier);
-          
-          ;}});          
+        console.log(id_couleur_modifée);
+
+        //.find() pour trouver objet mm id et mm couleur dans LS (récupération_panier)
+        let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
+          if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
+            let objet_trouvé = el;
+            console.log(objet_trouvé);
+             //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
+            let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
+            console.log(index_trouvé);
+            let modif_quantité_panier = récupération_panier[index_trouvé ];
+            let test = modif_quantité_panier.quantité = new_quantity_canap;
+            console.log(modif_quantité_panier);
+            console.log(test);
+            console.log(récupération_panier);
+
+
+              // let objet_trouvé_quantité = el.quantité;
+            // objet_trouvé = new_quantity_canap;
+
+            //   let objet_trouvé_quantité = objet_trouvé.quantité;
+            //  objet_trouvé_quantité = new_quantity_canap;
+            //   console.log(objet_trouvé_quantité);
+            // console.log(récupération_panier);
+            //.findIndex() pour trouver index dans LS (récupération_panier)
+            // let index_trouvé = récupération_panier.findIndex(el => el === objet_trouvé);
+            // console.log(index_trouvé);
+            //  let test =  récupération_panier.splice(index_trouvé);
+            //  console.log(test);
+          }
+        });
       }
-    
-      
 
       //FORMULAIRE
       //récupération des éléments du formulaire
