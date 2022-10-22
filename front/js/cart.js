@@ -66,7 +66,7 @@ for (let i in récupération_panier) {
       // Création div "cart__item__content__settings__quantity"
       let div_cart_item_content_settings_quantity = document.createElement("div");
       div_cart_item_content_settings_quantity.setAttribute("class", "cart__item__content__settings__quantity");
-      article.appendChild(div_cart_item_content_settings_quantity);
+      div_cart_item_content_settings.appendChild(div_cart_item_content_settings_quantity);
 
       // création P/quantité de  "cart__item__content__settings__quantity"
       let p_qté = document.createElement("p");
@@ -74,7 +74,7 @@ for (let i in récupération_panier) {
       div_cart_item_content_settings_quantity.appendChild(p_qté);
 
       // Création input class="itemQuantity"
-      let input = document.createElement("input");
+      let input = document.createElement ("input");
       input.setAttribute("type", "number");
       input.setAttribute("class", "itemQuantity");
       input.setAttribute("name", "itemQuantity");
@@ -85,7 +85,7 @@ for (let i in récupération_panier) {
 
       // Création div "cart__item__content__settings__delete"
       let div_cart_item_content_settings_delete = document.createElement("div");
-      div_cart_item_content_settings_delete.setAttribute("class", "div_cart_item_content_settings_delete");
+      div_cart_item_content_settings_delete.setAttribute("class", "cart_item_content_settings_delete");
       article.appendChild(div_cart_item_content_settings_delete);
 
       // Création p "deleteItem"
@@ -124,8 +124,8 @@ for (let i in récupération_panier) {
             // nouveau panier avec qté modifiée
             console.log(récupération_panier);
             let nouveau_panier_qté_modif= récupération_panier;
-            console.log(nouveau_panier_qté_modif);
-            let nouveau_panier_dans_LS = localStorage.setItem("panier_qté_modifiée", JSON.stringify(nouveau_panier_qté_modif));
+  
+            let nouveau_panier_dans_LS = localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_qté_modif));
           }
         });
       }
@@ -151,7 +151,7 @@ for (let i in récupération_panier) {
             console.log(index_suppression_panier);
             let nouveau_panier_après_suppression = récupération_panier;
             console.log(nouveau_panier_après_suppression);
-   let nouveau_LS_après_suppression =  localStorage.setItem("suppression-produit", JSON.stringify(nouveau_panier_après_suppression));
+   let nouveau_LS_après_suppression =  localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_après_suppression));
           }
         });
       }
