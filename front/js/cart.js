@@ -74,7 +74,7 @@ for (let i in récupération_panier) {
       div_cart_item_content_settings_quantity.appendChild(p_qté);
 
       // Création input class="itemQuantity"
-      let input = document.createElement ("input");
+      let input = document.createElement("input");
       input.setAttribute("type", "number");
       input.setAttribute("class", "itemQuantity");
       input.setAttribute("name", "itemQuantity");
@@ -123,21 +123,21 @@ for (let i in récupération_panier) {
             console.log(nouvelle_quantité_panier);
             // nouveau panier avec qté modifiée
             console.log(récupération_panier);
-            let nouveau_panier_qté_modif= récupération_panier;
-  
+            let nouveau_panier_qté_modif = récupération_panier;
+
             let nouveau_panier_dans_LS = localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_qté_modif));
           }
         });
       }
 
       //SUPPRIMER PRODUIT
-       let récup_supp =  document.getElementsByClassName("deleteItem");
+      let récup_supp = document.getElementsByClassName("deleteItem");
       p_delete.addEventListener("click", supprimer_produit);
       p_delete.style.cursor = "pointer";
-      function supprimer_produit () {
+      function supprimer_produit() {
         let parent_supprimer = this.closest("article");
-        let dataset_id_suppression = parent_supprimer .dataset.id;
-        let dataset_couleur_suppression = parent_supprimer .dataset.color;
+        let dataset_id_suppression = parent_supprimer.dataset.id;
+        let dataset_couleur_suppression = parent_supprimer.dataset.color;
         //.find() pour trouver objet mm id et mm couleur pour supprimer dans LS (récupération_panier)
         let trouver_suppression_mm_idEtCouleur = récupération_panier.find((el) => {
           if (el.id == dataset_id_suppression && el.couleur == dataset_couleur_suppression) {
@@ -151,12 +151,21 @@ for (let i in récupération_panier) {
             console.log(index_suppression_panier);
             let nouveau_panier_après_suppression = récupération_panier;
             console.log(nouveau_panier_après_suppression);
-   let nouveau_LS_après_suppression =  localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_après_suppression));
+            let nouveau_LS_après_suppression = localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_après_suppression));
           }
         });
       }
 
+      //TOTAL
+      let total_quantity_html = document.getElementById("totalQuantity");
+      let total_Price_html = document.getElementById("totalPrice");
+      let panier_final = JSON.parse(localStorage.getItem("choix_client"));
+      for (let i in panier_final){
+        panier_final[i].quantité;
+        console.log(panier_final[i].quantité);
+        
 
+      }
 
 
       //FORMULAIRE
