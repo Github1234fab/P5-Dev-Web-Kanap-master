@@ -96,40 +96,39 @@ for (let i in récupération_panier) {
       let texte_p_delete = document.createTextNode("Supprimer");
       p_delete.appendChild(texte_p_delete);
 
-      //CHANGEMENT QUANTITÉ
-      //écoute input
-      // input.addEventListener("change", change_quantity);
-      // function change_quantity() {
-      //   let new_quantity = input.value;
-      //   console.log(new_quantity);
-      //   //récupération des inputs de chaque canap
-      //   let input_parent = this.closest("article");
-      //   let id_qté_modifiée = input_parent.dataset.id;
-      //   console.log(id_qté_modifiée);
-      //   let id_couleur_modifée = input_parent.dataset.color;
-      //   console.log(id_couleur_modifée);
-
-      //   //.find() pour trouver objet mm id et mm couleur dans LS (récupération_panier)
-      //   let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
-      //     if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
-      //       let objet_trouvé = el;
-      //       console.log(objet_trouvé);
-      //       //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
-      //       let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
-      //       console.log(index_trouvé);
-      //       //Récup de l'index dans panier
-      //       let récup_index_panier = récupération_panier[index_trouvé];
-      //       //modif de la quantité dans l'objet/index
-      //       let nouvelle_quantité_panier = (récup_index_panier.quantité = new_quantity);
-      //       console.log(nouvelle_quantité_panier);
-      //       // nouveau panier avec qté modifiée
-      //       console.log(récupération_panier);
-      //       let nouveau_panier _qté_modif= récupération_panier;
-      //       console.log(nouveau_panier);
-      //       let nouveau_panier_dans_LS = localStorage.setItem("panier_qté_modifiée", JSON.stringify(nouveau_panier _qté_modif));
-      //     }
-      //   });
-      // }
+      // CHANGEMENT QUANTITÉ
+      // écoute input
+      input.addEventListener("change", change_quantity);
+      function change_quantity() {
+        let new_quantity = input.value;
+        console.log(new_quantity);
+        //récupération des inputs de chaque canap
+        let input_parent = this.closest("article");
+        let id_qté_modifiée = input_parent.dataset.id;
+        console.log(id_qté_modifiée);
+        let id_couleur_modifée = input_parent.dataset.color;
+        console.log(id_couleur_modifée);
+        //.find() pour trouver objet mm id et mm couleur dans LS (récupération_panier)
+        let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
+          if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
+            let objet_trouvé = el;
+            console.log(objet_trouvé);
+            //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
+            let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
+            console.log(index_trouvé);
+            //Récup de l'index dans panier
+            let récup_index_panier = récupération_panier[index_trouvé];
+            //modif de la quantité dans l'objet/index
+            let nouvelle_quantité_panier = (récup_index_panier.quantité = new_quantity);
+            console.log(nouvelle_quantité_panier);
+            // nouveau panier avec qté modifiée
+            console.log(récupération_panier);
+            let nouveau_panier_qté_modif= récupération_panier;
+            console.log(nouveau_panier_qté_modif);
+            let nouveau_panier_dans_LS = localStorage.setItem("panier_qté_modifiée", JSON.stringify(nouveau_panier_qté_modif));
+          }
+        });
+      }
 
       //SUPPRIMER PRODUIT
        let récup_supp =  document.getElementsByClassName("deleteItem");
