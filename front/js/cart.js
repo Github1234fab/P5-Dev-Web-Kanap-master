@@ -157,15 +157,41 @@ for (let i in récupération_panier) {
       }
 
       //TOTAL
-      let total_quantity_html = document.getElementById("totalQuantity");
-      let total_Price_html = document.getElementById("totalPrice");
-      let panier_final = JSON.parse(localStorage.getItem("choix_client"));
-      for (let i in panier_final){
-        panier_final[i].quantité;
-        console.log(panier_final[i].quantité);
-        
+  
+      // let total_Price_html = document.getElementById("totalPrice");
 
-      }
+      // Total qté
+      let total_quantity_html = document.getElementById("totalQuantity");
+      let panier_final = JSON.parse(localStorage.getItem("choix_client"));
+      console.log(panier_final);
+     let  panier_final_map = panier_final.map(el => el.quantité*1); //*1 pour obtenir un tableau, sans chaîne.
+     console.log(panier_final_map);
+     let add_qté_panier_final = panier_final_map.reduce((a, b) => (a+b));
+     console.log(add_qté_panier_final);
+     total_quantity_html.innerContent(add_qté_panier_final);
+
+         //Total prix
+        // let  panier_final_map_prix = panier_final.map(el => el.quantité*1); //*1 pour obtenir un tableau, sans chaîne.
+        // console.log(panier_final_map);
+        // let add_qté_panier_final = panier_final_map.reduce((a, b) => (a+b));
+        // console.log(add_qté_panier_final);
+
+
+
+      
+      // let qté_panier_final = panier_final.find(el => el === "quantité");
+      // console.log(qté_panier_final);
+
+      
+
+
+
+
+
+
+
+
+
 
 
       //FORMULAIRE
