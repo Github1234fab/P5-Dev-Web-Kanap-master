@@ -98,68 +98,67 @@ for (let i in récupération_panier) {
 
       //CHANGEMENT QUANTITÉ
       //écoute input
-      input.addEventListener("change", change_quantity);
-      function change_quantity() {
-        let new_quantity = input.value;
-        //qté canap+qté modifiée par client
-        let new_quantity_canap = Number(new_quantity) + Number(récupération_panier[i].quantité);
-        console.log(new_quantity_canap);
-        //récupération des inputs de chaque canap
-        let input_parent = this.closest("article");
-        let id_qté_modifiée = input_parent.dataset.id;
-        console.log(id_qté_modifiée);
-        let id_couleur_modifée = input_parent.dataset.color;
-        console.log(id_couleur_modifée);
+      // input.addEventListener("change", change_quantity);
+      // function change_quantity() {
+      //   let new_quantity = input.value;
+      //   console.log(new_quantity);
+      //   //récupération des inputs de chaque canap
+      //   let input_parent = this.closest("article");
+      //   let id_qté_modifiée = input_parent.dataset.id;
+      //   console.log(id_qté_modifiée);
+      //   let id_couleur_modifée = input_parent.dataset.color;
+      //   console.log(id_couleur_modifée);
 
-        //.find() pour trouver objet mm id et mm couleur dans LS (récupération_panier)
-        let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
-          if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
-            let objet_trouvé = el;
-            console.log(objet_trouvé);
-            //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
-            let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
-            console.log(index_trouvé);
-            //Récup de l'index dans panier
-            let récup_index_panier = récupération_panier[index_trouvé];
-            //modif de la quantité dans l'objet/index
-            let nouvelle_quantité_panier = (récup_index_panier.quantité = new_quantity_canap);
-            console.log(nouvelle_quantité_panier);
-            // nouveau panier avec qté modifiée
-            console.log(récupération_panier);
-            let nouveau_panier = récupération_panier;
-            console.log(nouveau_panier);
-            let nouveau_panier_dans_LS = localStorage.setItem("panier_qté_modifiée)", JSON.stringify(nouveau_panier));
-          }
-        });
-      }
+      //   //.find() pour trouver objet mm id et mm couleur dans LS (récupération_panier)
+      //   let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
+      //     if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
+      //       let objet_trouvé = el;
+      //       console.log(objet_trouvé);
+      //       //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
+      //       let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
+      //       console.log(index_trouvé);
+      //       //Récup de l'index dans panier
+      //       let récup_index_panier = récupération_panier[index_trouvé];
+      //       //modif de la quantité dans l'objet/index
+      //       let nouvelle_quantité_panier = (récup_index_panier.quantité = new_quantity);
+      //       console.log(nouvelle_quantité_panier);
+      //       // nouveau panier avec qté modifiée
+      //       console.log(récupération_panier);
+      //       let nouveau_panier _qté_modif= récupération_panier;
+      //       console.log(nouveau_panier);
+      //       let nouveau_panier_dans_LS = localStorage.setItem("panier_qté_modifiée", JSON.stringify(nouveau_panier _qté_modif));
+      //     }
+      //   });
+      // }
 
-      //CHANGEMENT QUANTITÉ
-      //  let récup_supp =  document.getElementsByClassName("deleteItem");
+      //SUPPRIMER PRODUIT
+       let récup_supp =  document.getElementsByClassName("deleteItem");
       p_delete.addEventListener("click", supprimer_produit);
-      function supprimer_produit() {
-        let supprimer_parent = this.closest("article");
-        let dataset_id_suppression = supprimer_parent.dataset.id;
-        // console.log(dataset_id_suppression);
-        let dataset_couleur_suppression = supprimer_parent.dataset.color;
-        // console.log(dataset_couleur_suppression);
-
+      p_delete.style.cursor = "pointer";
+      function supprimer_produit () {
+        let parent_supprimer = this.closest("article");
+        let dataset_id_suppression = parent_supprimer .dataset.id;
+        let dataset_couleur_suppression = parent_supprimer .dataset.color;
         //.find() pour trouver objet mm id et mm couleur pour supprimer dans LS (récupération_panier)
         let trouver_suppression_mm_idEtCouleur = récupération_panier.find((el) => {
           if (el.id == dataset_id_suppression && el.couleur == dataset_couleur_suppression) {
             let objet_àsupprimer_trouvé = el;
             console.log(objet_àsupprimer_trouvé);
-
             // .findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
             let index_àsupprimer_trouvé = récupération_panier.findIndex((el) => el === objet_àsupprimer_trouvé);
             console.log(index_àsupprimer_trouvé);
             // Récup de l'index dans panier
             let index_suppression_panier = récupération_panier.splice(index_àsupprimer_trouvé, 1);
             console.log(index_suppression_panier);
-            let nouveau_panier_supprimé =   récupération_panier;
-            console.log(nouveau_panier_supprimé);
+            let nouveau_panier_après_suppression = récupération_panier;
+            console.log(nouveau_panier_après_suppression);
+   let nouveau_LS_après_suppression =  localStorage.setItem("suppression-produit", JSON.stringify(nouveau_panier_après_suppression));
           }
         });
       }
+
+
+
 
       //FORMULAIRE
       //récupération des éléments du formulaire
