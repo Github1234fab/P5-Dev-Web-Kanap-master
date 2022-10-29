@@ -194,6 +194,10 @@ for (let i in récupération_panier) {
     });
 }
 
+
+
+
+
 // -----------------------------
 //FORMULAIRE
 //récupération des éléments du formulaire
@@ -220,7 +224,7 @@ function form_valid(e) {
   let mess_err_firstName = document.getElementById("firstNameErrorMsg");
   if (regex_champs.test(firstName_value) == false) {
     mess_err_firstName.innerHTML = "Les caractères autorisés sont les minuscules, majuscules et - ,  . '  ";
-  } else if ((firstName_value = "" || firstName_value.length < 2)) {
+  } else if (firstName_value = "" || firstName_value.length < 2) {
     mess_err_firstName.innerHTML = "Ce champ doit être rempli et contenir au minimum 2 caractères.";
   } else {
     mess_err_firstName.innerHTML = "Champ validé!";
@@ -265,9 +269,48 @@ function form_valid(e) {
   } else {
     mess_err_email.innerHTML = "Champ validé!";
   }
+
+let contact = {
+firstName : firstName.value,
+lastName: lastName.value,
+address: address.value,
+city: city.value,
+email: email.value
+}
+console.log(contact);
+
+let products = récupération_panier.map(el => el.id);
+console.log(products);
+
+let order = {
+  contact : contact,
+ products: products
+  };
+  // const sendMockedData = () =>
+   fetch("http://localhost:3000/api/products/order", {
+  method: "POST",
+  headers: {
+  "Accept": "application/json",
+  "Content-Type": "application/json",
+  },
+  body: JSON.stringify(order)
+  })
+  .then(res => res.json())
+  .then(data => {
+  console.log(data);
+  })
+  .catch(err => console.log(err));
+  // sendMockedData();
+
 }
 
 
-fetch("http://localhost:3000/api/products/" + index_id)
-    .then((response) => response.json())
-    .then((data) => {
+
+
+
+
+
+
+
+
+
