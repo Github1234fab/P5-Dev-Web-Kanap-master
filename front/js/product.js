@@ -5,7 +5,7 @@ let url = window.location.search;
 // récupération des keys/values de l'url
 let para = new URLSearchParams(url);
 let id = para.get("id");
-// console.log(id);
+console.log(id);
 
 // requête fetch
 fetch("http://localhost:3000/api/products/" + id)

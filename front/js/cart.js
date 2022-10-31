@@ -297,7 +297,10 @@ let order = {
   })
   .then(res => res.json())
   .then(data => {
-  console.log(data);
+
+  let order_id = data.orderId;
+  console.log(order_id);
+ document.location.href="http://127.0.0.1:5500/front/html/confirmation.html?id="+data.orderId;
   })
   .catch(err => console.log(err));
   // sendMockedData();
@@ -306,6 +309,7 @@ let order = {
 
 
 
+// "./product.html?id=" + data[i]._id)
 
 
 
