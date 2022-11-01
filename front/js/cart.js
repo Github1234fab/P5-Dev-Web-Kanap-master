@@ -166,7 +166,6 @@ for (let i in récupération_panier) {
           }
         });
       }
- 
     });
 }
 
@@ -182,153 +181,120 @@ let email = document.getElementById("email");
 let order = document.getElementById("order");
 
 //écoute du bouton "commander"
-formulaire.addEventListener("submit", form_valid);
+// formulaire.addEventListener("submit", form_valid);
 
 //fonction au submit du formulaire:
-function form_valid(e) {
-  e.preventDefault();
-  let regex_champs = /^[a-zA-Z -,.']+$/;
-  let regex_address = /^[a-zA-Z0-9 -,.']+$/;
-  let regex_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  //pour nom
+let regex_champs = /^[a-zA-Z -']+$/;
+let regex_address = /^[a-zA-Z0-9 -,.']+$/;
+let regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+//pour nom
+firstName.addEventListener("input", function () {
   let firstName_value = firstName.value.trim();
   let mess_err_firstName = document.getElementById("firstNameErrorMsg");
-  if (regex_champs.test(firstName_value) == false) {
-    mess_err_firstName.innerHTML = "Les caractères autorisés sont les minuscules, majuscules et - ,  . '  ";
-  } else if (firstName_value = "" || firstName_value.length < 2) {
-    mess_err_firstName.innerHTML = "Ce champ doit être rempli et contenir au minimum 2 caractères.";
+  if (regex_champs.test(firstName_value) == false || firstName == "" || firstName_value.length < 2) {
+    mess_err_firstName.innerHTML = "Les caractères autorisés sont les minuscules, majuscules, des tirets ou des apostrophes SVP.  ";
+    this.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_firstName.innerHTML = "Champ validé!";
+    this.style.backgroundColor = "white";
   }
-  //pour prénom
+});
+// pour prénom
+lastName.addEventListener("input", function () {
   let lastName_value = lastName.value.trim();
   let mess_err_lastName = document.getElementById("lastNameErrorMsg");
-  if (regex_champs.test(lastName_value) == false) {
-    mess_err_lastName.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules et des tirets, SVP.";
-  } else if ((lastName_value = "" || lastName_value.length < 2)) {
-    mess_err_lastName.innerHTML = "Ce champ doit être rempli et contenir au minimum 2 caractères.";
+  if (regex_champs.test(lastName_value) == false || lastName_value == "" || lastName_value.length < 2) {
+    mess_err_lastName.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules, des tirets ou des apostrophes SVP.";
+    this.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_lastName.innerHTML = "Champ validé!";
+    this.style.backgroundColor = "white";
   }
-  //pour address
+});
+//pour address
+address.addEventListener("input", function () {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
-  if (regex_address.test(address_value) == false) {
-    mess_err_address.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules et des tirets, SVP.";
-  } else if ((address_value = "" || address_value.length < 2)) {
-    mess_err_address.innerHTML = "Ce champ doit être rempli et contenir au minimum 2 caractères.";
+  if (regex_address.test(address_value) == false || address_value == "" || address_value.length < 2) {
+    mess_err_address.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules et des tirets ou des apostrophes SVP.";
+    this.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_address.innerHTML = "Champ validé!";
+    this.style.backgroundColor = "white";
   }
+});
 
-  //pour city
+//pour city
+city.addEventListener("input", function () {
   let city_value = city.value.trim();
   let mess_err_city = document.getElementById("cityErrorMsg");
-  if (regex_champs.test(city_value) == false) {
+  if (regex_champs.test(city_value) == false || city_value == "" || city_value.length < 2) {
     mess_err_city.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules et des tirets, SVP.";
-  } else if ((city_value = "" || city_value.length < 2)) {
-    mess_err_city.innerHTML = "Ce champ doit être rempli et contenir au minimum 2 caractères.";
+    this.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_city.innerHTML = "Champ validé!";
+    this.style.backgroundColor = "white";
   }
+});
 
-  //pour e-mail
+//pour e-mail
+email.addEventListener("input", function () {
   let email_value = email.value.trim();
   let mess_err_email = document.getElementById("emailErrorMsg");
   if (regex_email.test(email_value) == false) {
     mess_err_email.innerHTML = "Adresse e-mail non valide, veuillez vérifier votre adresse, SVP!";
+    this.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_email.innerHTML = "Champ validé!";
+    this.style.backgroundColor = "white";
   }
+});
 
-// // condition pour envoyer la commande
-if (regex_champs.test(firstName_value) == false || regex_champs.test(lastName_value) == false || regex_address.test(address_value) == false || regex_champs.test(city_value) == false ||  regex_email.test(email_value) == false){
-return false;
-} 
-
-
+formulaire.addEventListener("submit", form_valid);
+function form_valid(e) {
+  e.preventDefault();
 
   //Création objet contact pour envoi vers l'API
-let contact = {
-firstName : firstName.value,
-lastName: lastName.value,
-address: address.value,
-city: city.value,
-email: email.value
-}
-console.log(contact);
+  let contact = {
+    firstName: firstName.value,
+    lastName: lastName.value,
+    address: address.value,
+    city: city.value,
+    email: email.value,
+  };
+  console.log(contact);
 
-//   //Création objet products pour envoi vers l'API
-let products = récupération_panier.map(el => el.id);
-console.log(products);
+  //   //Création objet products pour envoi vers l'API
+  let products = récupération_panier.map((el) => el.id);
+  console.log(products);
 
-//   //Création objet order (contact+products) pour envoi vers l'API
-let order = {
-  contact : contact,
- products: products
+  //   //Création objet order (contact+products) pour envoi vers l'API
+  let order = {
+    contact: contact,
+    products: products,
   };
 
-//   //envoi de order vers l'API
-   fetch("http://localhost:3000/api/products/order", {
-  method: "POST",
-  headers: {
-  "Accept": "application/json",
-  "Content-Type": "application/json",
-  },
-  body: JSON.stringify(order)
+  //   //envoi de order vers l'API
+  fetch("http://localhost:3000/api/products/order", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(order),
   })
-  .then(res => res.json())
-  .then(data => {
-
-  let order_id = data.orderId;
-  console.log(order_id);
- window.location.href="http://127.0.0.1:5500/front/html/confirmation.html?id="+data.orderId;
-  })
-  .catch(err => console.log(err));
-  
+    .then((res) => res.json())
+    .then((data) => {
+      let order_id = data.orderId;
+      console.log(order_id);
+      window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
+    })
+    .catch((err) => console.log(err));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "./product.html?id=" + data[i]._id)
-
-
-
-
-/// TOTAL PRIX POUR CHAQUE PRODUIT
-            //  let parent_prix_HTML = p_prix.closest("article");
-            //  let dataset_id_prix = parent_prix_HTML.dataset.id;
-            //  let dataset_couleur_prix = parent_prix_HTML.dataset.color;
-            //  let prix_par_produit = Number(p_prix.innerText);
-            //  console.log(prix_par_produit);
-            //  let total_prix_par_produit = prix_par_produit * nouvelle_quantité_panier;
-            //  console.log(total_prix_par_produit);
-
-            // total += total_prix_par_produit;
-            // console.log(total);
-
-
-
-     // // TOTAL QUANTITÉ AFFICHÉE
-      // input.addEventListener("change", total_quantity);
-      // function total_quantity() {
-      //   let panier_final = JSON.parse(localStorage.getItem("choix_client"));
-      //   console.log(panier_final);
-      //   let panier_final_map = panier_final.map((el) => el.quantité * 1); //*1 pour obtenir un tableau, sans chaîne.
-      //   console.log(panier_final_map);
-      //   let add_qté_panier_final = panier_final_map.reduce((a, b) => a + b);
-      //   console.log(add_qté_panier_final);
-      //   let total_quantity_html = document.getElementById("totalQuantity");
-      //   total_quantity_html.innerHTML = add_qté_panier_final;
-      // }
