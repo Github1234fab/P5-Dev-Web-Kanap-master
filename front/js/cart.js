@@ -180,11 +180,7 @@ let city = document.getElementById("city");
 let email = document.getElementById("email");
 let order = document.getElementById("order");
 
-//écoute du bouton "commander"
-// formulaire.addEventListener("submit", form_valid);
-
-//fonction au submit du formulaire:
-
+// les Regex
 let regex_champs = /^[a-zA-Z -']+$/;
 let regex_address = /^[a-zA-Z0-9 -,.']+$/;
 let regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -257,6 +253,7 @@ email.addEventListener("input", function () {
   }
 });
 
+//pour envoi du form
 formulaire.addEventListener("submit", form_valid);
 function form_valid(e) {
   e.preventDefault();
