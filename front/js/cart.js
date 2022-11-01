@@ -120,7 +120,7 @@ for (let i in récupération_panier) {
         let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
           if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
             let objet_trouvé = el;
-            // console.log(objet_trouvé);
+            console.log(objet_trouvé);
             //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
             let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
             // console.log(index_trouvé);
@@ -136,18 +136,6 @@ for (let i in récupération_panier) {
             let nouveau_panier_dans_LS = localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_qté_modif));
             location.reload();
             console.log(récupération_panier);
-
-            /// TOTAL PRIX POUR CHAQUE PRODUIT
-            //  let parent_prix_HTML = p_prix.closest("article");
-            //  let dataset_id_prix = parent_prix_HTML.dataset.id;
-            //  let dataset_couleur_prix = parent_prix_HTML.dataset.color;
-            //  let prix_par_produit = Number(p_prix.innerText);
-            //  console.log(prix_par_produit);
-            //  let total_prix_par_produit = prix_par_produit * nouvelle_quantité_panier;
-            //  console.log(total_prix_par_produit);
-
-            // total += total_prix_par_produit;
-            // console.log(total);
           }
         });
       }
@@ -178,25 +166,9 @@ for (let i in récupération_panier) {
           }
         });
       }
-
-      // TOTAL QUANTITÉ AFFICHÉE
-      input.addEventListener("change", total_quantity);
-      function total_quantity() {
-        let panier_final = JSON.parse(localStorage.getItem("choix_client"));
-        console.log(panier_final);
-        let panier_final_map = panier_final.map((el) => el.quantité * 1); //*1 pour obtenir un tableau, sans chaîne.
-        console.log(panier_final_map);
-        let add_qté_panier_final = panier_final_map.reduce((a, b) => a + b);
-        console.log(add_qté_panier_final);
-        let total_quantity_html = document.getElementById("totalQuantity");
-        total_quantity_html.innerHTML = add_qté_panier_final;
-      }
+ 
     });
 }
-
-
-
-
 
 // -----------------------------
 //FORMULAIRE
@@ -270,6 +242,14 @@ function form_valid(e) {
     mess_err_email.innerHTML = "Champ validé!";
   }
 
+// // condition pour envoyer la commande
+if (regex_champs.test(firstName_value) == false || regex_champs.test(lastName_value) == false || regex_address.test(address_value) == false || regex_champs.test(city_value) == false ||  regex_email.test(email_value) == false){
+return false;
+} 
+
+
+
+  //Création objet contact pour envoi vers l'API
 let contact = {
 firstName : firstName.value,
 lastName: lastName.value,
@@ -279,14 +259,17 @@ email: email.value
 }
 console.log(contact);
 
+//   //Création objet products pour envoi vers l'API
 let products = récupération_panier.map(el => el.id);
 console.log(products);
 
+//   //Création objet order (contact+products) pour envoi vers l'API
 let order = {
   contact : contact,
  products: products
   };
-  // const sendMockedData = () =>
+
+//   //envoi de order vers l'API
    fetch("http://localhost:3000/api/products/order", {
   method: "POST",
   headers: {
@@ -303,9 +286,18 @@ let order = {
  window.location.href="http://127.0.0.1:5500/front/html/confirmation.html?id="+data.orderId;
   })
   .catch(err => console.log(err));
-  // sendMockedData();
-
+  
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -314,7 +306,29 @@ let order = {
 
 
 
+/// TOTAL PRIX POUR CHAQUE PRODUIT
+            //  let parent_prix_HTML = p_prix.closest("article");
+            //  let dataset_id_prix = parent_prix_HTML.dataset.id;
+            //  let dataset_couleur_prix = parent_prix_HTML.dataset.color;
+            //  let prix_par_produit = Number(p_prix.innerText);
+            //  console.log(prix_par_produit);
+            //  let total_prix_par_produit = prix_par_produit * nouvelle_quantité_panier;
+            //  console.log(total_prix_par_produit);
+
+            // total += total_prix_par_produit;
+            // console.log(total);
 
 
 
-
+     // // TOTAL QUANTITÉ AFFICHÉE
+      // input.addEventListener("change", total_quantity);
+      // function total_quantity() {
+      //   let panier_final = JSON.parse(localStorage.getItem("choix_client"));
+      //   console.log(panier_final);
+      //   let panier_final_map = panier_final.map((el) => el.quantité * 1); //*1 pour obtenir un tableau, sans chaîne.
+      //   console.log(panier_final_map);
+      //   let add_qté_panier_final = panier_final_map.reduce((a, b) => a + b);
+      //   console.log(add_qté_panier_final);
+      //   let total_quantity_html = document.getElementById("totalQuantity");
+      //   total_quantity_html.innerHTML = add_qté_panier_final;
+      // }
