@@ -181,8 +181,8 @@ let email = document.getElementById("email");
 let order = document.getElementById("order");
 
 // les Regex
-let regex_champs = /^[a-zA-Z '-]+$/;
-let regex_address = /^[a-zA-Z0-9 -,.'éèçà&öù]+$/;
+let regex_champs = /^[a-zA-Z'-]+$/;
+let regex_address = /^[a-zA-Z0-9][.,'][éèçà&öù]+$/;
 let regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 //pour prénom
@@ -214,7 +214,7 @@ lastName.addEventListener("input", function () {
 address.addEventListener("input", function () {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
-  if (regex_address.test(address_value) == false || address_value == "" || address_value.length < 2) {
+  if (regex_champs.test(address_value) == false || address_value == "" || address_value.length < 2) {
     mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù)";
     this.style.backgroundColor = "LightCoral";
   } else {
@@ -251,9 +251,8 @@ email.addEventListener("input", function () {
 
 //pour envoi du form
 formulaire.addEventListener("submit", form_valid);
-function form_valid(e) {
-  e.preventDefault();
-}
+
+function form_valid (e) {
   if (
     firstName.value.trim().length == 0 ||
     lastName.value.trim().length == 0 ||
@@ -262,9 +261,9 @@ function form_valid(e) {
     email.value.trim().length == 0 ||
     regex_champs.test(firstName.value) == false ||
     regex_champs.test(lastName.value) == false ||
-    regex_champs.test(address.value) == false ||
+    regex_address.test(address.value) == false ||
     regex_champs.test(city.value) == false ||
-    regex_champs.test(email.value) == false ||
+    regex_email.test(email.value) == false ||
     firstName.value == "" ||
     lastName.value == "" ||
     addressName.value == "" ||
@@ -276,7 +275,8 @@ function form_valid(e) {
     city.value < 2 ||
     email.value < 2
   ) {
-    alert("Veuillez vérifier que tous les champs soien bien valides SVP!");
+    // alert("Veuillez vérifier que tous les champs soien bien valides SVP!");
+    e.preventDefault();
   } else {
       //Création objet contact pour envoi vers l'API
     let contact = {
@@ -315,6 +315,8 @@ function form_valid(e) {
       })
       .catch((err) => console.log(err));
   }
+}
+
 
 
 
