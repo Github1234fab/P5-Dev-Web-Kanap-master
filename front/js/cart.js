@@ -78,7 +78,7 @@ for (let i in récupération_panier) {
 
       // création P/quantité de  "cart__item__content__settings__quantity"
       let p_qté = document.createElement("p");
-      p_qté.innerHTML = récupération_panier[i].quantité;
+      // p_qté.innerHTML = récupération_panier[i].quantité;
       div_cart_item_content_settings_quantity.appendChild(p_qté);
 
       // Création input class="itemQuantity"
@@ -88,7 +88,7 @@ for (let i in récupération_panier) {
       input.setAttribute("name", "itemQuantity");
       input.setAttribute("min", "1");
       input.setAttribute("max", "100");
-      input.setAttribute("value", "42");
+      input.setAttribute("value", récupération_panier[i].quantité);
       div_cart_item_content_settings_quantity.appendChild(input);
 
       // Création div "cart__item__content__settings__delete"
@@ -181,18 +181,18 @@ let email = document.getElementById("email");
 let order = document.getElementById("order");
 
 // les Regex
-let regex_champs = /^[a-zA-Z -']+$/;
-let regex_address = /^[a-zA-Z0-9 -,.']+$/;
+let regex_champs = /^[a-zA-Z '-]+$/;
+let regex_address = /^[a-zA-Z0-9 -,.'éèçà&öù]+$/;
 let regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-//pour nom
+//pour prénom
+
 firstName.addEventListener("input", function () {
   let firstName_value = firstName.value.trim();
   let mess_err_firstName = document.getElementById("firstNameErrorMsg");
   if (regex_champs.test(firstName_value) == false || firstName == "" || firstName_value.length < 2) {
-    mess_err_firstName.innerHTML = "Les caractères autorisés sont les minuscules, majuscules, des tirets ou des apostrophes SVP.  ";
+    mess_err_firstName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés.  ";
     this.style.backgroundColor = "LightCoral";
-    return false;
   } else {
     mess_err_firstName.innerHTML = "Champ validé!";
     this.style.backgroundColor = "white";
@@ -203,9 +203,8 @@ lastName.addEventListener("input", function () {
   let lastName_value = lastName.value.trim();
   let mess_err_lastName = document.getElementById("lastNameErrorMsg");
   if (regex_champs.test(lastName_value) == false || lastName_value == "" || lastName_value.length < 2) {
-    mess_err_lastName.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules, des tirets ou des apostrophes SVP.";
+    mess_err_lastName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
     this.style.backgroundColor = "LightCoral";
-    return false;
   } else {
     mess_err_lastName.innerHTML = "Champ validé!";
     this.style.backgroundColor = "white";
@@ -216,9 +215,8 @@ address.addEventListener("input", function () {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
   if (regex_address.test(address_value) == false || address_value == "" || address_value.length < 2) {
-    mess_err_address.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules et des tirets ou des apostrophes SVP.";
+    mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù)";
     this.style.backgroundColor = "LightCoral";
-    return false;
   } else {
     mess_err_address.innerHTML = "Champ validé!";
     this.style.backgroundColor = "white";
@@ -230,9 +228,8 @@ city.addEventListener("input", function () {
   let city_value = city.value.trim();
   let mess_err_city = document.getElementById("cityErrorMsg");
   if (regex_champs.test(city_value) == false || city_value == "" || city_value.length < 2) {
-    mess_err_city.innerHTML = "Veuillez saisir uniquement des minuscules, des majuscules et des tirets, SVP.";
+    mess_err_city.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
     this.style.backgroundColor = "LightCoral";
-    return false;
   } else {
     mess_err_city.innerHTML = "Champ validé!";
     this.style.backgroundColor = "white";
@@ -246,7 +243,6 @@ email.addEventListener("input", function () {
   if (regex_email.test(email_value) == false) {
     mess_err_email.innerHTML = "Adresse e-mail non valide, veuillez vérifier votre adresse, SVP!";
     this.style.backgroundColor = "LightCoral";
-    return false;
   } else {
     mess_err_email.innerHTML = "Champ validé!";
     this.style.backgroundColor = "white";
@@ -257,41 +253,68 @@ email.addEventListener("input", function () {
 formulaire.addEventListener("submit", form_valid);
 function form_valid(e) {
   e.preventDefault();
-
-  //Création objet contact pour envoi vers l'API
-  let contact = {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    address: address.value,
-    city: city.value,
-    email: email.value,
-  };
-  console.log(contact);
-
-  //   //Création objet products pour envoi vers l'API
-  let products = récupération_panier.map((el) => el.id);
-  console.log(products);
-
-  //   //Création objet order (contact+products) pour envoi vers l'API
-  let order = {
-    contact: contact,
-    products: products,
-  };
-
-  //   //envoi de order vers l'API
-  fetch("http://localhost:3000/api/products/order", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(order),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      let order_id = data.orderId;
-      console.log(order_id);
-      window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
-    })
-    .catch((err) => console.log(err));
 }
+  if (
+    firstName.value.trim().length == 0 ||
+    lastName.value.trim().length == 0 ||
+    address.value.trim().length == 0 ||
+    city.value.trim().length == 0 ||
+    email.value.trim().length == 0 ||
+    regex_champs.test(firstName.value) == false ||
+    regex_champs.test(lastName.value) == false ||
+    regex_champs.test(address.value) == false ||
+    regex_champs.test(city.value) == false ||
+    regex_champs.test(email.value) == false ||
+    firstName.value == "" ||
+    lastName.value == "" ||
+    addressName.value == "" ||
+    city.value == "" ||
+    email.value == "" ||
+    firstName.value < 2 ||
+    lastName.value < 2 ||
+    addressName.value < 2 ||
+    city.value < 2 ||
+    email.value < 2
+  ) {
+    alert("Veuillez vérifier que tous les champs soien bien valides SVP!");
+  } else {
+      //Création objet contact pour envoi vers l'API
+    let contact = {
+      firstName: firstName.value,
+      lastName: lastName.value,
+      address: address.value,
+      city: city.value,
+      email: email.value,
+    };
+    console.log(contact);
+
+    //   //Création objet products pour envoi vers l'API
+    let products = récupération_panier.map((el) => el.id);
+    console.log(products);
+
+    //   //Création objet order (contact+products) pour envoi vers l'API
+    let order = {
+      contact: contact,
+      products: products,
+    };
+
+    //   //envoi de order vers l'API
+    fetch("http://localhost:3000/api/products/order", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        let order_id = data.orderId;
+        console.log(order_id);
+        // window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
+      })
+      .catch((err) => console.log(err));
+  }
+
+
+
