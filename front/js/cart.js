@@ -263,22 +263,22 @@ function form_valid (e) {
     regex_champs.test(lastName.value) == false ||
     regex_address.test(address.value) == false ||
     regex_champs.test(city.value) == false ||
-    regex_email.test(email.value) == false ||
-    firstName.value == "" ||
-    lastName.value == "" ||
-    addressName.value == "" ||
-    city.value == "" ||
-    email.value == "" ||
-    firstName.value < 2 ||
-    lastName.value < 2 ||
-    addressName.value < 2 ||
-    city.value < 2 ||
-    email.value < 2
+    regex_email.test(email.value) == false 
+    // firstName.value == "" ||
+    // lastName.value == "" ||
+    // addressName.value == "" ||
+    // city.value == "" ||
+    // email.value == "" 
+    // firstName.value < 2 ||
+    // lastName.value < 2 ||
+    // addressName.value < 2 ||
+    // city.value < 2 ||
+    // email.value < 2
   ) {
-    // alert("Veuillez vérifier que tous les champs soien bien valides SVP!");
-    e.preventDefault();
+    alert("Veuillez vérifier que tous les champs soient bien valides, SVP!");
+e.preventDefault();
   } else {
-      //Création objet contact pour envoi vers l'API
+      // Création objet contact pour envoi vers l'API
     let contact = {
       firstName: firstName.value,
       lastName: lastName.value,
@@ -297,7 +297,6 @@ function form_valid (e) {
       contact: contact,
       products: products,
     };
-
     //   //envoi de order vers l'API
     fetch("http://localhost:3000/api/products/order", {
       method: "POST",
@@ -311,7 +310,7 @@ function form_valid (e) {
       .then((data) => {
         let order_id = data.orderId;
         console.log(order_id);
-        // window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
+        window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
       })
       .catch((err) => console.log(err));
   }
