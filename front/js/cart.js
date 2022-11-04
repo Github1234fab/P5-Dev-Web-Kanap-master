@@ -181,8 +181,8 @@ let email = document.getElementById("email");
 let order = document.getElementById("order");
 
 // les Regex
-let regex_champs = /^[a-zA-Z'-]+$/;
-let regex_address = /^[a-zA-Z0-9][.,'][éèçà&öù]+$/;
+let regex_champs = /^[-a-zA-Z'\séèàùçöäë]+$/;
+let regex_address = /^[-a-zA-Z-0-9',\séèàùçöäë]+$/;
 let regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 //pour prénom
@@ -198,7 +198,7 @@ firstName.addEventListener("input", function () {
     this.style.backgroundColor = "white";
   }
 });
-// pour prénom
+// pour nom
 lastName.addEventListener("input", function () {
   let lastName_value = lastName.value.trim();
   let mess_err_lastName = document.getElementById("lastNameErrorMsg");
@@ -214,7 +214,7 @@ lastName.addEventListener("input", function () {
 address.addEventListener("input", function () {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
-  if (regex_champs.test(address_value) == false || address_value == "" || address_value.length < 2) {
+  if ( address_value == "" || address_value.length < 2 || regex_address.test(address_value) == false) {
     mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù)";
     this.style.backgroundColor = "LightCoral";
   } else {
