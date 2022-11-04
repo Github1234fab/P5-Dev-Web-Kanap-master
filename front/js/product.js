@@ -1,11 +1,9 @@
 // récupération de l'url
 let url = window.location.search;
-// console.log(url);
 
 // récupération des keys/values de l'url
 let para = new URLSearchParams(url);
 let id = para.get("id");
-console.log(id);
 
 // requête fetch
 fetch("http://localhost:3000/api/products/" + id)
@@ -67,7 +65,7 @@ fetch("http://localhost:3000/api/products/" + id)
           couleur: select.value,
           quantité: input_quantité.value,
         };
-        console.log(canap);
+
         let panier = localStorage.getItem("choix_client");
         if (panier == null) {
           panier = [];

@@ -1,12 +1,10 @@
 let récupération_panier = JSON.parse(localStorage.getItem("choix_client"));
-console.log(récupération_panier);
 
 let quantité_total = 0;
 let montant_total = 0;
 // boucle récupération des ID du panier
 for (let i in récupération_panier) {
   let index_id = récupération_panier[i].id;
-  console.log(index_id);
 
   fetch("http://localhost:3000/api/products/" + index_id)
     .then((response) => response.json())
@@ -16,9 +14,6 @@ for (let i in récupération_panier) {
 
       document.getElementById("totalQuantity").textContent = quantité_total;
       document.getElementById("totalPrice").textContent = montant_total;
-
-      console.log(montant_total);
-      console.log(quantité_total);
 
       // Récupération section DOM
       let section_dom = document.getElementById("cart__items");
@@ -110,7 +105,7 @@ for (let i in récupération_panier) {
       input.addEventListener("change", change_quantity);
       function change_quantity() {
         let new_quantity = input.value;
-        console.log(new_quantity);
+
         //récupération des inputs de chaque canap
         let input_parent = this.closest("article");
         let id_qté_modifiée = input_parent.dataset.id;
@@ -120,10 +115,10 @@ for (let i in récupération_panier) {
         let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
           if (el.id == id_qté_modifiée && el.couleur == id_couleur_modifée) {
             let objet_trouvé = el;
-            console.log(objet_trouvé);
+
             //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
             let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
-            // console.log(index_trouvé);
+
             //Récup de l'index dans panier
             let récup_index_panier = récupération_panier[index_trouvé];
             //modif de la quantité dans l'objet indexé
@@ -132,10 +127,9 @@ for (let i in récupération_panier) {
             console.log(nouvelle_quantité_panier);
             // nouveau panier avec qté modifiée
             let nouveau_panier_qté_modif = récupération_panier;
-            // console.log(nouveau_panier_qté_modif);
+
             let nouveau_panier_dans_LS = localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_qté_modif));
             location.reload();
-            console.log(récupération_panier);
           }
         });
       }
@@ -152,15 +146,15 @@ for (let i in récupération_panier) {
         let trouver_suppression_mm_idEtCouleur = récupération_panier.find((el) => {
           if (el.id == dataset_id_suppression && el.couleur == dataset_couleur_suppression) {
             let objet_àsupprimer_trouvé = el;
-            console.log(objet_àsupprimer_trouvé);
+
             // .findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
             let index_àsupprimer_trouvé = récupération_panier.findIndex((el) => el === objet_àsupprimer_trouvé);
-            console.log(index_àsupprimer_trouvé);
+
             // Récup de l'index dans panier
             let index_suppression_panier = récupération_panier.splice(index_àsupprimer_trouvé, 1);
-            console.log(index_suppression_panier);
+
             let nouveau_panier_après_suppression = récupération_panier;
-            console.log(nouveau_panier_après_suppression);
+
             let nouveau_LS_après_suppression = localStorage.setItem("choix_client", JSON.stringify(nouveau_panier_après_suppression));
             location.reload();
           }
@@ -170,7 +164,7 @@ for (let i in récupération_panier) {
 }
 
 // -----------------------------
-//FORMULAIRE
+///FORMULAIRE
 //récupération des éléments du formulaire
 let formulaire = document.querySelector(".cart__order__form");
 let firstName = document.getElementById("firstName");
@@ -275,7 +269,7 @@ function form_valid (e) {
     // city.value < 2 ||
     // email.value < 2
   ) {
-    alert("Veuillez vérifier que tous les champs soient bien valides, SVP!");
+    alert("Veuillez vérifier que tous les champs sont bien valides, SVP!");
 e.preventDefault();
   } else {
       // Création objet contact pour envoi vers l'API
@@ -312,10 +306,6 @@ e.preventDefault();
         console.log(order_id);
         window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => alert(err));
   }
 }
-
-
-
-
