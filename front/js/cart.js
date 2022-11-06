@@ -208,7 +208,7 @@ lastName.addEventListener("input", function () {
 address.addEventListener("input", function () {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
-  if ( address_value == "" || address_value.length < 2 || regex_address.test(address_value) == false) {
+  if (regex_address.test(address_value) == false || address_value == "" || address_value.length < 2) {
     mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù)";
     this.style.backgroundColor = "LightCoral";
   } else {
@@ -246,33 +246,35 @@ email.addEventListener("input", function () {
 //pour envoi du form
 formulaire.addEventListener("submit", form_valid);
 
-function form_valid (e) {
+function form_valid(e) {
   if (
     firstName.value.trim().length == 0 ||
-    lastName.value.trim().length == 0 ||
-    address.value.trim().length == 0 ||
-    city.value.trim().length == 0 ||
-    email.value.trim().length == 0 ||
     regex_champs.test(firstName.value) == false ||
+    firstName.value == "" ||
+    firstName.value.length < 2 ||
+    lastName.value.trim().length == 0 ||
     regex_champs.test(lastName.value) == false ||
+    lastName.value == "" ||
+    lastName.value.length < 2 ||
+    address.value.trim().length == 0 ||
     regex_address.test(address.value) == false ||
-    regex_champs.test(city.value) == false ||
-    regex_email.test(email.value) == false 
-    // firstName.value == "" ||
-    // lastName.value == "" ||
     // addressName.value == "" ||
-    // city.value == "" ||
-    // email.value == "" 
-    // firstName.value < 2 ||
-    // lastName.value < 2 ||
     // addressName.value < 2 ||
-    // city.value < 2 ||
-    // email.value < 2
+
+    city.value.trim().length == 0 ||
+    regex_champs.test(city.value) == false ||
+    city.value == "" ||
+    city.value.length < 2 ||
+  
+    email.value.trim().length == 0 ||
+    regex_email.test(email.value) == false ||
+    email.value == "" ||
+    email.value.length < 2
   ) {
     alert("Veuillez vérifier que tous les champs sont bien valides, SVP!");
-e.preventDefault();
+    e.preventDefault();
   } else {
-      // Création objet contact pour envoi vers l'API
+    // Création objet contact pour envoi vers l'API
     let contact = {
       firstName: firstName.value,
       lastName: lastName.value,
@@ -280,11 +282,9 @@ e.preventDefault();
       city: city.value,
       email: email.value,
     };
-    console.log(contact);
 
     //   //Création objet products pour envoi vers l'API
     let products = récupération_panier.map((el) => el.id);
-    console.log(products);
 
     //   //Création objet order (contact+products) pour envoi vers l'API
     let order = {

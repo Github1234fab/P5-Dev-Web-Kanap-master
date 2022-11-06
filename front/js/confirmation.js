@@ -10,4 +10,4 @@ let order = valeur.get("id");
 let order_id = document.getElementById("orderId");
 order_id.innerText = order;
 
-localStorage.clear();
+// localStorage.clear();
