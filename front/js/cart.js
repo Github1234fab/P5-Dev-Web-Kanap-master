@@ -181,99 +181,101 @@ let regex_email = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 //pour prénom
 
-firstName.addEventListener("input", function () {
+firstName.addEventListener("input", firstName_control);
+function firstName_control() {
   let firstName_value = firstName.value.trim();
   let mess_err_firstName = document.getElementById("firstNameErrorMsg");
   if (regex_champs.test(firstName_value) == false || firstName == "" || firstName_value.length < 2) {
-    mess_err_firstName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés.  ";
-    this.style.backgroundColor = "LightCoral";
+    mess_err_firstName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
+    firstName.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_firstName.innerHTML = "Champ validé!";
-    this.style.backgroundColor = "white";
+    firstName.style.backgroundColor = "white";
+    return true;
   }
-});
+}
+
 // pour nom
-lastName.addEventListener("input", function () {
+lastName.addEventListener("input", lastName_control);
+function lastName_control() {
   let lastName_value = lastName.value.trim();
   let mess_err_lastName = document.getElementById("lastNameErrorMsg");
   if (regex_champs.test(lastName_value) == false || lastName_value == "" || lastName_value.length < 2) {
     mess_err_lastName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
-    this.style.backgroundColor = "LightCoral";
+    lastName.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_lastName.innerHTML = "Champ validé!";
-    this.style.backgroundColor = "white";
+    lastName.style.backgroundColor = "white";
+    return true;
   }
-});
+}
 //pour address
-address.addEventListener("input", function () {
+address.addEventListener("input", address_control);
+
+function address_control() {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
   if (regex_address.test(address_value) == false || address_value == "" || address_value.length < 2) {
     mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù)";
-    this.style.backgroundColor = "LightCoral";
+    address.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_address.innerHTML = "Champ validé!";
-    this.style.backgroundColor = "white";
+    address.style.backgroundColor = "white";
+    return true;
   }
-});
+}
 
 //pour city
-city.addEventListener("input", function () {
+city.addEventListener("input", city_control);
+
+function city_control () {
   let city_value = city.value.trim();
   let mess_err_city = document.getElementById("cityErrorMsg");
   if (regex_champs.test(city_value) == false || city_value == "" || city_value.length < 2) {
     mess_err_city.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
-    this.style.backgroundColor = "LightCoral";
+    city.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_city.innerHTML = "Champ validé!";
-    this.style.backgroundColor = "white";
+    city.style.backgroundColor = "white";
+    return true
   }
-});
+}
 
 //pour e-mail
-email.addEventListener("input", function () {
+email.addEventListener("input", email_control);
+
+function email_control() {
   let email_value = email.value.trim();
   let mess_err_email = document.getElementById("emailErrorMsg");
   if (regex_email.test(email_value) == false) {
     mess_err_email.innerHTML = "Adresse e-mail non valide, veuillez vérifier votre adresse, SVP!";
-    this.style.backgroundColor = "LightCoral";
+    email.style.backgroundColor = "LightCoral";
+    return false;
   } else {
     mess_err_email.innerHTML = "Champ validé!";
-    this.style.backgroundColor = "white";
+    email.style.backgroundColor = "white";
+    return true;
   }
-});
+}
+  
+ 
 
 //pour envoi du form
 formulaire.addEventListener("submit", form_valid);
 
-function form_valid(e) {
-  if (
-    firstName.value.trim().length == 0 ||
-    regex_champs.test(firstName.value) == false ||
-    firstName.value == "" ||
-    firstName.value.length < 2 ||
-    lastName.value.trim().length == 0 ||
-    regex_champs.test(lastName.value) == false ||
-    lastName.value == "" ||
-    lastName.value.length < 2 ||
-    address.value.trim().length == 0 ||
-    regex_address.test(address.value) == false ||
-    // addressName.value == "" ||
-    // addressName.value < 2 ||
+function form_valid(e){
+  e.preventDefault();
+  if (!(firstName_control() && lastName_control() && address_control() && city_control() && email_control()))
 
-    city.value.trim().length == 0 ||
-    regex_champs.test(city.value) == false ||
-    city.value == "" ||
-    city.value.length < 2 ||
-  
-    email.value.trim().length == 0 ||
-    regex_email.test(email.value) == false ||
-    email.value == "" ||
-    email.value.length < 2
-  ) {
-    alert("Veuillez vérifier que tous les champs sont bien valides, SVP!");
-    e.preventDefault();
-  } else {
+  {
+    alert("Veuillez vérifier que tous les champs soient bien valides, SVP!");
+  }
+  else
+  {
     // Création objet contact pour envoi vers l'API
     let contact = {
       firstName: firstName.value,
@@ -283,7 +285,7 @@ function form_valid(e) {
       email: email.value,
     };
 
-    //   //Création objet products pour envoi vers l'API
+    //Création objet products pour envoi vers l'API
     let products = récupération_panier.map((el) => el.id);
 
     //   //Création objet order (contact+products) pour envoi vers l'API
