@@ -2,6 +2,7 @@ let récupération_panier = JSON.parse(localStorage.getItem("choix_client"));
 
 let quantité_total = 0;
 let montant_total = 0;
+
 // boucle récupération des ID du panier
 for (let i in récupération_panier) {
   let index_id = récupération_panier[i].id;
@@ -9,6 +10,7 @@ for (let i in récupération_panier) {
   fetch("http://localhost:3000/api/products/" + index_id)
     .then((response) => response.json())
     .then((data) => {
+      // Création quantité totale + montant total
       quantité_total = quantité_total + Number(récupération_panier[i].quantité);
       montant_total = montant_total + Number(récupération_panier[i].quantité) * Number(data.price);
 
@@ -58,7 +60,7 @@ for (let i in récupération_panier) {
 
       // création P/rpix de div  "cart__item__content__description"
       let p_prix = document.createElement("p");
-      p_prix.innerHTML = data.price;
+      p_prix.innerHTML = data.price + "€";
       div_item_content_description.appendChild(p_prix);
 
       // création div   "cart__item__content__settings"
@@ -73,7 +75,7 @@ for (let i in récupération_panier) {
 
       // création P/quantité de  "cart__item__content__settings__quantity"
       let p_qté = document.createElement("p");
-      // p_qté.innerHTML = récupération_panier[i].quantité;
+      p_qté.innerHTML = récupération_panier[i].quantité;
       div_cart_item_content_settings_quantity.appendChild(p_qté);
 
       // Création input class="itemQuantity"
@@ -95,7 +97,6 @@ for (let i in récupération_panier) {
       let p_delete = document.createElement("p");
       p_delete.setAttribute("class", "deleteItem");
       div_cart_item_content_settings_delete.appendChild(p_delete);
-
       let texte_p_delete = document.createTextNode("Supprimer");
       p_delete.appendChild(texte_p_delete);
 
@@ -103,13 +104,14 @@ for (let i in récupération_panier) {
       // CHANGEMENT QUANTITÉ
       // écoute input
       input.addEventListener("change", change_quantity);
+
       function change_quantity() {
         let new_quantity = input.value;
-
         //récupération des inputs de chaque canap
         let input_parent = this.closest("article");
         let id_qté_modifiée = input_parent.dataset.id;
         let id_couleur_modifée = input_parent.dataset.color;
+
         //.find() pour trouver objet mm id et mm couleur dans LS (récupération_panier)
         let récupération_panier = JSON.parse(localStorage.getItem("choix_client"));
         let trouver_mm_idEtCouleur = récupération_panier.find((el) => {
@@ -118,13 +120,11 @@ for (let i in récupération_panier) {
 
             //.findIndex() pour trouver index de l'objet trouvé dans LS (récupération_panier)
             let index_trouvé = récupération_panier.findIndex((el) => el === objet_trouvé);
-
             //Récup de l'index dans panier
             let récup_index_panier = récupération_panier[index_trouvé];
             //modif de la quantité dans l'objet indexé
             let nouvelle_quantité_panier = (récup_index_panier.quantité = new_quantity);
             p_qté.innerText = nouvelle_quantité_panier;
-            console.log(nouvelle_quantité_panier);
             // nouveau panier avec qté modifiée
             let nouveau_panier_qté_modif = récupération_panier;
 
@@ -133,11 +133,12 @@ for (let i in récupération_panier) {
           }
         });
       }
-
+     
       //SUPPRIMER PRODUIT
       let récup_supp = document.getElementsByClassName("deleteItem");
       p_delete.addEventListener("click", supprimer_produit);
       p_delete.style.cursor = "pointer";
+
       function supprimer_produit() {
         let parent_supprimer = this.closest("article");
         let dataset_id_suppression = parent_supprimer.dataset.id;
@@ -186,7 +187,7 @@ function firstName_control() {
   let firstName_value = firstName.value.trim();
   let mess_err_firstName = document.getElementById("firstNameErrorMsg");
   if (regex_champs.test(firstName_value) == false || firstName == "" || firstName_value.length < 2) {
-    mess_err_firstName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
+    mess_err_firstName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. Veuillez saisir au minimum deux caractères";
     firstName.style.backgroundColor = "LightCoral";
     return false;
   } else {
@@ -202,7 +203,7 @@ function lastName_control() {
   let lastName_value = lastName.value.trim();
   let mess_err_lastName = document.getElementById("lastNameErrorMsg");
   if (regex_champs.test(lastName_value) == false || lastName_value == "" || lastName_value.length < 2) {
-    mess_err_lastName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
+    mess_err_lastName.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. Veuillez saisir au minimum deux caractères ";
     lastName.style.backgroundColor = "LightCoral";
     return false;
   } else {
@@ -218,7 +219,7 @@ function address_control() {
   let address_value = address.value.trim();
   let mess_err_address = document.getElementById("addressErrorMsg");
   if (regex_address.test(address_value) == false || address_value == "" || address_value.length < 2) {
-    mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù)";
+    mess_err_address.innerHTML = "Les seuls champs autorisés sont : (a-z) (A-Z) (0-9) (-,.') (éèçà&öù). Veuillez saisir au minimum deux caractères";
     address.style.backgroundColor = "LightCoral";
     return false;
   } else {
@@ -231,17 +232,17 @@ function address_control() {
 //pour city
 city.addEventListener("input", city_control);
 
-function city_control () {
+function city_control() {
   let city_value = city.value.trim();
   let mess_err_city = document.getElementById("cityErrorMsg");
   if (regex_champs.test(city_value) == false || city_value == "" || city_value.length < 2) {
-    mess_err_city.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. ";
+    mess_err_city.innerHTML = "Seuls les minuscules, majuscules, tirets et apostrophes sont autorisés. Veuillez saisir au minimum deux caractères ";
     city.style.backgroundColor = "LightCoral";
     return false;
   } else {
     mess_err_city.innerHTML = "Champ validé!";
     city.style.backgroundColor = "white";
-    return true
+    return true;
   }
 }
 
@@ -261,21 +262,15 @@ function email_control() {
     return true;
   }
 }
-  
- 
 
 //pour envoi du form
 formulaire.addEventListener("submit", form_valid);
 
-function form_valid(e){
+function form_valid(e) {
   e.preventDefault();
-  if (!(firstName_control() && lastName_control() && address_control() && city_control() && email_control()))
-
-  {
+  if (!(firstName_control() && lastName_control() && address_control() && city_control() && email_control())) {
     alert("Veuillez vérifier que tous les champs soient bien valides, SVP!");
-  }
-  else
-  {
+  } else {
     // Création objet contact pour envoi vers l'API
     let contact = {
       firstName: firstName.value,
@@ -304,8 +299,7 @@ function form_valid(e){
     })
       .then((res) => res.json())
       .then((data) => {
-        let order_id = data.orderId;
-        console.log(order_id);
+        // let order_id = data.orderId;
         window.location.href = "http://127.0.0.1:5500/front/html/confirmation.html?id=" + data.orderId;
       })
       .catch((err) => alert(err));

@@ -1,23 +1,20 @@
 fetch("http://localhost:3000/api/products")
   .then((response) => response.json())
   .then((data) => {
+    // section_canape.className = "items";
     let section_canape = document.getElementById("items");
-    section_canape.className = "items";
-
+    let article;
     let lien_canape;
     let image_canape;
     let nom_canape;
     let description_canape;
-    let article = document.getElementsByTagName("article");
 
     for (let i = 0; i < data.length; i++) {
       // Affiche lien Canapé
       lien_canape = document.createElement("a");
       lien_canape.setAttribute("href", "./product.html?id=" + data[i]._id);
-      // lien_canape.textContent = data[i]._id;
       section_canape.appendChild(lien_canape);
-
-      let article = document.createElement("Article");
+      article = document.createElement("Article");
       lien_canape.appendChild(article);
 
       // Affiche image Canapé

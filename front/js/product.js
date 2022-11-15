@@ -15,8 +15,7 @@ fetch("http://localhost:3000/api/products/" + id)
     IMG.src = data.imageUrl;
     IMG.setAttribute("alt", data.altTxt);
     image_product.appendChild(IMG);
-    ("");
-
+  
     // Affichage nom produit
     let name_product = document.querySelector("#title");
     name_product.innerHTML = data.name;
@@ -46,7 +45,6 @@ fetch("http://localhost:3000/api/products/" + id)
     let input_quantité = document.getElementById("quantity");
     // récupération et écoute du bouton panier
     let bouton_panier = document.getElementById("addToCart");
-    // bouton_panier.addEventListener("click", test_panier);
     bouton_panier.addEventListener("click", test_panier);
 
     // fonction id.push couleur.push et qté.push dans array_panier
@@ -89,7 +87,7 @@ fetch("http://localhost:3000/api/products/" + id)
 
         // // envoi vers LS
         let envoi_panier = localStorage.setItem("choix_client", JSON.stringify(panier));
-
+  
         // récupération du storage
         let récup_storage = JSON.parse(localStorage.getItem("choix_client"));
       }
